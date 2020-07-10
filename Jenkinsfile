@@ -15,13 +15,13 @@ pipeline {
               sh "mvn clean install"
             }
         }
-        stage("deploy"){
+       stage("deploy"){
             steps{
-              sshagent(['deploy_user']) {
-                 sh "scp -o StrictHostKeyChecking=no webapp/target/webapp.war ec2-user@18.218.177.105:/root/apache-tomcat-8.5.57/webapps"
+             sh "curl -v -u tomcat:tomcat -T /var/lib/jenkins/workspace/Maven/webapp/target/webapp.war 'http://ec2-3-17-204-182.us-east-2.compute.amazonaws.com:8080//manager/html/deploy?path=/MavenPipeline'"
+
 
                  
-                }
+                
             }
         }
     }
